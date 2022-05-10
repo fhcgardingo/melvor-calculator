@@ -116,49 +116,22 @@ total_logs2_wood_resp.grid(column=1, row=9)
 
 # functions Woodcutting
 
+def get_xp(current, desired):
+    current_xp = current
+    desired_level_get = desired
 
-def xp_hr_per_tree1():
-    type_tree = var_wood_list1.get()
-    type_axe = var_material_axe_list.get()
-    if type_axe == "Iron":
-        percent_axe = 0.95
-    elif type_axe == "Steel":
-        percent_axe = 0.90
-    elif type_axe == "Black":
-        percent_axe = 0.80
-    elif type_axe == "Mithril":
-        percent_axe = 0.70
-    elif type_axe == "Adamant":
-        percent_axe = 0.65
-    elif type_axe == "Rune":
-        percent_axe = 0.60
-    elif type_axe == "Dragon":
-        percent_axe = 0.50
+    if current:
+        desired_lvl_df = pd.read_excel('xp.xlsx')
+        desired_lvl = int(desired_lvl_df.loc[desired_lvl_df['level'] == int(desired_level_get), 'exp'])
+        total_xp = desired_lvl - int(current_xp)
+        return total_xp
     else:
-        percent_axe = 1
+        return 0
 
-    master_of_nature = var_master_of_nature.get()
-    if master_of_nature == "Yes":
-        percent_master = 0.80
-    else:
-        percent_master = 1
+def adj_cut_time(typetree, typeaxe):
+    type_tree = typetree
+    type_axe = typeaxe
 
-    woodcutting_df = pd.read_excel('Woodcutting.xlsx')
-    cuttime = int(woodcutting_df.loc[woodcutting_df['Tree'] == type_tree, 'Cut Time'])
-    exp = int(woodcutting_df.loc[woodcutting_df['Tree'] == type_tree, 'Exp'])
-    adjcuttime = cuttime * percent_axe * percent_master
-    if (exp == 0) or (type_tree == 'None'):
-        xp_hr_tree1_resp['text'] = 0
-        xp_hour = 0
-    else:
-        xp_hour = exp / (round(adjcuttime, 2)) * 3600
-        xp_hr_tree1_resp['text'] = (round(xp_hour))
-    return (round(xp_hour))
-
-
-def xp_hr_per_tree2():
-    type_tree = var_wood_list2.get()
-    type_axe = var_material_axe_list.get()
     if type_axe == "Iron":
         percent_axe = 0.95
     elif type_axe == "Steel":
@@ -175,55 +148,54 @@ def xp_hr_per_tree2():
         percent_axe = 0.50
     else:
         percent_axe = 1
-
+    
     master_of_nature = var_master_of_nature.get()
     if master_of_nature == "Yes":
         percent_master = 0.80
     else:
         percent_master = 1
 
-    woodcutting_df = pd.read_excel('Woodcutting.xlsx')
-    cuttime = int(
-        woodcutting_df.loc[woodcutting_df['Tree'] == type_tree, 'Cut Time'])
-    exp = int(woodcutting_df.loc[woodcutting_df['Tree'] == type_tree, 'Exp'])
+    get_wood_df = pd.read_excel('Woodcutting.xlsx')
+    cuttime = int(get_wood_df.loc[get_wood_df['Tree'] == type_tree, 'Cut Time'])
     adjcuttime = cuttime * percent_axe * percent_master
+    return adjcuttime
 
-    if (exp == 0) or (type_tree == 'None'):
+def get_exp_tree(typep):
+    type_tree = typep
+    get_exp_tree_df = pd.read_excel('Woodcutting.xlsx')
+    exp = int(get_exp_tree_df.loc[get_exp_tree_df['Tree'] == type_tree, 'Exp'])
+    return exp
+
+def xp_hr_per_tree1():
+    adjcuttime_tree1 = adj_cut_time(var_wood_list1.get(), var_material_axe_list.get())
+    type_tree1 = var_wood_list1.get()
+    exp_tree1 = get_exp_tree(type_tree1)
+
+    if (exp_tree1 == 0) or (type_tree1 == 'None'):
+        xp_hr_tree1_resp['text'] = 0
+        xp_hour = 0
+    else:
+        xp_hour = exp_tree1 / (round(adjcuttime_tree1, 2)) * 3600
+        xp_hr_tree1_resp['text'] = (round(xp_hour))
+    return (round(xp_hour))
+
+def xp_hr_per_tree2():
+    adjcuttime_tree2 = adj_cut_time(var_wood_list2.get(),var_material_axe_list.get())
+    type_tree2 = var_wood_list2.get()
+    exp_tree2 = get_exp_tree(type_tree2)
+
+    if (exp_tree2 == 0) or (type_tree2 == 'None'):
         xp_hr_tree2_resp['text'] = 0
         xp_hour = 0
     else:
-        xp_hour = exp / (round(adjcuttime, 2)) * 3600
+        xp_hour = exp_tree2 / (round(adjcuttime_tree2, 2)) * 3600
         xp_hr_tree2_resp['text'] = (round(xp_hour))
     return (round(xp_hour))
 
-
 def logs_hour1():
-    type_tree = var_wood_list1.get()
-    type_axe = var_material_axe_list.get()
-    level = var_mastery_wood.get()
-
-    if type_axe == "Iron":
-        percent_axe = 0.95
-    elif type_axe == "Steel":
-        percent_axe = 0.90
-    elif type_axe == "Black":
-        percent_axe = 0.80
-    elif type_axe == "Mithril":
-        percent_axe = 0.70
-    elif type_axe == "Adamant":
-        percent_axe = 0.65
-    elif type_axe == "Rune":
-        percent_axe = 0.60
-    elif type_axe == "Dragon":
-        percent_axe = 0.50
-    else:
-        percent_axe = 1
-
-    master_of_nature = var_master_of_nature.get()
-    if master_of_nature == "Yes":
-        percent_master = 0.80
-    else:
-        percent_master = 1
+    adjcuttime_log1 = adj_cut_time(var_wood_list1.get(), var_material_axe_list.get())
+    type_tree_log1 = var_wood_list1.get()
+    level_log1 = var_mastery_wood.get()
 
     skill_cape = var_skill_cape.get()
     if skill_cape == "Yes":
@@ -232,45 +204,19 @@ def logs_hour1():
         percent_skill = 1
 
     # logs/hour func
-    if type_tree != 'None':
+    if type_tree_log1 != 'None':
+        logs_hour_base = 3600 / (round(adjcuttime_log1, 2))
         woodcutting_df = pd.read_excel('Woodcutting.xlsx')
-        cuttime = int(woodcutting_df.loc[woodcutting_df['Tree'] == type_tree, 'Cut Time'])
-        adjcuttime = cuttime * percent_axe * percent_master
-        logs_hour_base = 3600 / (round(adjcuttime, 2))
-        mastery_multiplier = woodcutting_df.loc[woodcutting_df['Level'] == int(level), 'Multiplier']
+        mastery_multiplier = woodcutting_df.loc[woodcutting_df['Level'] == int(level_log1), 'Multiplier']
         logs_hour = float(mastery_multiplier) * round(logs_hour_base) * percent_skill
         logs_hour1_resp['text'] = (round(logs_hour))
     else:
         logs_hour1_resp['text'] = 0
 
-
 def logs_hour2():
-    type_tree = var_wood_list2.get()
-    type_axe = var_material_axe_list.get()
-    level = var_mastery_wood.get()
-
-    if type_axe == "Iron":
-        percent_axe = 0.95
-    elif type_axe == "Steel":
-        percent_axe = 0.90
-    elif type_axe == "Black":
-        percent_axe = 0.80
-    elif type_axe == "Mithril":
-        percent_axe = 0.70
-    elif type_axe == "Adamant":
-        percent_axe = 0.65
-    elif type_axe == "Rune":
-        percent_axe = 0.60
-    elif type_axe == "Dragon":
-        percent_axe = 0.50
-    else:
-        percent_axe = 1
-
-    master_of_nature = var_master_of_nature.get()
-    if master_of_nature == "Yes":
-        percent_master = 0.80
-    else:
-        percent_master = 1
+    adjcuttime_log2 = adj_cut_time(var_wood_list2.get(), var_material_axe_list.get())
+    type_tree_log2 = var_wood_list2.get()
+    level_log2 = var_mastery_wood.get()
 
     skill_cape = var_skill_cape.get()
     if skill_cape == "Yes":
@@ -279,44 +225,38 @@ def logs_hour2():
         percent_skill = 1
 
     # logs/hour func
-    if type_tree != 'None':
+    if type_tree_log2 != 'None':
+        logs_hour_base = 3600 / (round(adjcuttime_log2, 2))
         woodcutting_df = pd.read_excel('Woodcutting.xlsx')
-        cuttime = int(woodcutting_df.loc[woodcutting_df['Tree'] == type_tree, 'Cut Time'])
-        adjcuttime = cuttime * percent_axe * percent_master
-        logs_hour_base = 3600 / (round(adjcuttime, 2))
-        mastery_multiplier = woodcutting_df.loc[woodcutting_df['Level'] == int(level), 'Multiplier']
+        mastery_multiplier = woodcutting_df.loc[woodcutting_df['Level'] == int(level_log2), 'Multiplier']
         logs_hour = float(mastery_multiplier) * round(logs_hour_base) * percent_skill
         logs_hour2_resp['text'] = (round(logs_hour))
     else:
         logs_hour2_resp['text'] = 0
-
 
 def total_xp_hr_wood():
     xp_tree1 = xp_hr_per_tree1()
     xp_tree2 = xp_hr_per_tree2()
 
     if (xp_tree1 != 0) and (xp_tree2 != 0):
-        total_xp = xp_tree1 + xp_tree2
+        total_xp_hr = xp_tree1 + xp_tree2
     elif (xp_tree1 != 0) and (xp_tree2 == 0):
-        total_xp = xp_tree1
+        total_xp_hr = xp_tree1
     elif (xp_tree1 == 0) and (xp_tree2 != 0):
-        total_xp = xp_tree2
+        total_xp_hr = xp_tree2
     else:
-        total_xp = 0
+        total_xp_hr = 0
 
-    total_xp_hr_resp['text'] = total_xp
-    return total_xp
-
+    total_xp_hr_resp['text'] = total_xp_hr
+    # print(total_xp_hr)
+    return total_xp_hr
 
 def hours_till_lvl_wood():
-    current_xp = current_xp_wood_resp.get()
-    desired_lvl_get = var_desired_wood.get()
+    xp_hour = get_xp(current_xp_wood_resp.get(), var_desired_wood.get())
     total_xp = total_xp_hr_wood()
- 
+
     if total_xp != 0:
-        desired_lvl_df = pd.read_excel('xp.xlsx')
-        desired_lvl = int(desired_lvl_df.loc[desired_lvl_df['level'] == int(desired_lvl_get), 'exp'])
-        hours_till = ((desired_lvl - int(current_xp) )/ total_xp)
+        hours_till = xp_hour / total_xp
         hours_round = round(hours_till,2)
         hora, minuto = str(hours_round).split('.')
         minuto2, segundo = str(round((int(minuto)*0.6),2)).split('.')        # setar segundos para duas casa somente
@@ -326,15 +266,12 @@ def hours_till_lvl_wood():
         hours_till_lvl_wood_resp['text'] = 0
     
 def total_logs1():
-    current_xp = current_xp_wood_resp.get()
-    desired_lvl_get = var_desired_wood.get()
+    xp_log1 = get_xp(current_xp_wood_resp.get(), var_desired_wood.get())
     total_xp = total_xp_hr_wood()
     type_tree1 = var_wood_list1.get()
 
     if total_xp != 0:
-        desired_lvl_df = pd.read_excel('xp.xlsx')
-        desired_lvl = int(desired_lvl_df.loc[desired_lvl_df['level'] == int(desired_lvl_get), 'exp'])
-        hours_till = ((desired_lvl - int(current_xp) )/ total_xp)
+        hours_till = xp_log1 / total_xp
         hours_round = round(hours_till,2)
         
         logs_hour_df = pd.read_excel('Woodcutting.xlsx')
@@ -345,15 +282,12 @@ def total_logs1():
         total_logs1_wood_resp['text'] = 0
     
 def total_logs2():
-    current_xp = current_xp_wood_resp.get()
-    desired_lvl_get = var_desired_wood.get()
+    xp_log2 = get_xp(current_xp_wood_resp.get(), var_desired_wood.get())
     total_xp = total_xp_hr_wood()
     type_tree2 = var_wood_list2.get()
 
     if total_xp != 0:
-        desired_lvl_df = pd.read_excel('xp.xlsx')
-        desired_lvl = int(desired_lvl_df.loc[desired_lvl_df['level'] == int(desired_lvl_get), 'exp'])
-        hours_till = ((desired_lvl - int(current_xp) )/ total_xp)
+        hours_till = xp_log2 / total_xp
         hours_round = round(hours_till,2)
         
         logs_hour_df = pd.read_excel('Woodcutting.xlsx')
@@ -582,9 +516,15 @@ mastery_lvl_cook_text = Label(fr_cook_esq, text='Mastery Level')
 mastery_lvl_cook_text.grid(column=0, row=4)
 
 def skill_cape_cook():
-    pass
+    skill_cape_cook = var_skill_cape_cook.get()
+    return(skill_cape_cook)
+    
 def art_of_control_cook():
-    pass
+    art_of_control_cook = var_art_of_control_cook.get()
+    if art_of_control_cook == 1:
+        return 2.4
+    else:
+        return 3
 
 var_your_fire = StringVar()
 var_your_fire.set(wood_list[0]) 
@@ -602,7 +542,7 @@ var_fish_cook = StringVar()
 var_fish_cook.set(fish_list[0]) 
 fish_cook_resp = OptionMenu(fr_cook_esq, var_fish_cook, *fish_list)
 fish_cook_resp.grid(column=1, row=3)
-var_mastery_lvl_cook = StringVar()
+var_mastery_lvl_cook = IntVar()
 var_mastery_lvl_cook.set(lvl_list[0]) 
 mastery_lvl_cook_resp = OptionMenu(fr_cook_esq, var_mastery_lvl_cook, *lvl_list)
 mastery_lvl_cook_resp.grid(column=1, row=4)
@@ -616,7 +556,7 @@ gloves_profit_cook_text.grid(column=0, row=1)
 xp_hr_cook_text = Label(fr_cook_dir, text='XP/Hr')
 xp_hr_cook_text.grid(column=0, row=2)
 
-burn_rate_cook_resp = Label(fr_cook_dir, text='0%')
+burn_rate_cook_resp = Label(fr_cook_dir, text='0')
 burn_rate_cook_resp.grid(column=1, row=0)
 gloves_profit_cook_resp = Label(fr_cook_dir, text='0')
 gloves_profit_cook_resp.grid(column=1, row=1)
@@ -647,6 +587,52 @@ fish2_cook_resp.grid(column=1, row=2)
 fish_needed_cook_resp = Label(fr_cook_dir2, text='Fish Needed')
 fish_needed_cook_resp.grid(column=1, row=3)
 
+# functions cooking
+
+def burn_rate_cook():
+    if skill_cape_cook() == 1:
+        burn_rate_cook_resp['text'] = 0
+        return 0
+    else:
+        level = var_mastery_lvl_cook.get()
+        burn_rate = (30 - (int(level) * 0.6))+1
+    if burn_rate < 0:
+        burn_rate_cook_resp['text'] = 1
+        return 1
+    else:
+        burn_rate_cook_resp['text'] = round(burn_rate)
+        return burn_rate
+
+#FIXME ao executar gloves_profit_cook a função burn_rate_cook tambem executa, corrigir.
+def gloves_profit_cook():
+    type_fish = var_fish_cook.get()
+    burn_rate = burn_rate_cook()
+
+    cooking_df = pd.read_excel('cooking.xlsx')
+    value = int(cooking_df.loc[cooking_df['Fish'] == type_fish, 'Value'])
+    gloves_profit = ((500*value)-((500*(1-(burn_rate*0.01)))*value))-50000
+    gloves_profit_cook_resp['text'] = round(gloves_profit)
+
+#FIXME ao executar xp_hr_cook a função burn_rate_cook tambem execura, corrigir.
+def xp_hr_cook():
+    type_fish = var_fish_cook.get()
+    cook_rate = 3600/art_of_control_cook() 
+    burn_rate = burn_rate_cook()
+    
+    xp_df = pd.read_excel('cooking.xlsx')
+    xp = int(xp_df.loc[xp_df['Fish'] == type_fish,'Xp'])
+    xp_hr = (cook_rate*(burn_rate*0.01))+((cook_rate*(1-(burn_rate*0.01)))*xp)
+    xp_hr_cook_resp['text'] = round(xp)
+
+def fish_needed_cook():
+    pass
+
+
+
+# cooking button    
+
+calculate_cooking = Button(fr_cook_esq, text='Calcular',command=xp_hr_cook)
+calculate_cooking.grid(column=0, row=6)
 
 # Xp Calculate
 tab5 = Frame(tabControl)
