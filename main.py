@@ -468,9 +468,9 @@ desired_fish_resp.grid(column=1, row=4)
 hour_fish_resp = Label(fr_fish_dir, text="função")
 hour_fish_resp.grid(column=1, row=5)
 
-#functions fish
+# functions fish
 
-#Firemaking
+# Firemaking
 tab3 = Frame(tabControl)
 tabControl.add(tab3, text='Firemaking')
 
@@ -482,10 +482,10 @@ fr_fire_dir.place(x=266, y=0)
 
 # frame 1
 
-logs_text = Label(fr_fire_esq, text="Logs")
-logs_text.grid(column=0, row=0)
-art_of_control_text = Label(fr_fire_esq, text="Art of Control")
-art_of_control_text.grid(column=0, row=1)
+logs_fire_text = Label(fr_fire_esq, text="Logs")
+logs_fire_text.grid(column=0, row=0)
+art_of_control_fire_text = Label(fr_fire_esq, text="Art of Control")
+art_of_control_fire_text.grid(column=0, row=1)
 lvl_fire_text = Label(fr_fire_esq, text='Lvl 99')
 lvl_fire_text.grid(column=0, row=2)
 bonfire_text = Label(fr_fire_esq, text='Bonfire')
@@ -493,6 +493,7 @@ bonfire_text.grid(column=0, row=3)
 controlled_heat_text = Label(fr_fire_esq, text='Controlled Heat')
 controlled_heat_text.grid(column=0, row=4)
 
+#functions checkbuttons
 def art_of_control():
     pass
 def lvl_fire():
@@ -507,9 +508,9 @@ var_fire_logs.set(wood_list[0])
 logs_fire_resp = OptionMenu(fr_fire_esq, var_fire_logs, *wood_list)
 logs_fire_resp.grid(column=1, row=0)
 var_art_of_control = IntVar()
-art_of_control_resp = Checkbutton(fr_fire_esq,variable=var_art_of_control, onvalue=1, offvalue=0, command=art_of_control)
-art_of_control_resp.pack()
-art_of_control_resp.grid(column=1, row=1)
+art_of_control_fire_resp = Checkbutton(fr_fire_esq,variable=var_art_of_control, onvalue=1, offvalue=0, command=art_of_control)
+art_of_control_fire_resp.pack()
+art_of_control_fire_resp.grid(column=1, row=1)
 var_lvl_fire = IntVar()
 lvl_fire_resp = Checkbutton(fr_fire_esq,variable=var_lvl_fire, onvalue=1, offvalue=0, command=lvl_fire)
 lvl_fire_resp.pack()
@@ -553,11 +554,105 @@ desired_lvl_fire_resp.grid(column=1, row=4)
 logs_needed_fire_resp = Label(fr_fire_dir, text='0')
 logs_needed_fire_resp.grid(column=1, row=5) 
 
-# Xp Calculate
-tab4 = Frame(tabControl)
-tabControl.add(tab4, text='XP Calculate')
+#functions firemaking
 
-fr_xp_calculate_esq = Frame(tab4, borderwidth=1, relief='solid')
+# Cooking
+tab4 = Frame(tabControl)
+tabControl.add(tab4, text='Cooking')
+
+# frames
+fr_cook_esq = Frame(tab4, borderwidth=1, relief="solid")
+fr_cook_esq.place(x=0, y=0)
+fr_cook_dir = Frame(tab4, borderwidth=1, relief='solid')
+fr_cook_dir.place(x=280, y=0)
+fr_cook_dir2 = Frame(tab4, borderwidth=1, relief='solid')
+fr_cook_dir2.place(x=280, y= 70)
+
+# frame 1
+
+your_fire_cook_text = Label(fr_cook_esq, text='Your Fire')
+your_fire_cook_text.grid(column=0, row=0)
+skill_cape_text = Label(fr_cook_esq, text='Skill Cape/Cooking Gloves')
+skill_cape_text.grid(column=0, row=1)
+art_of_control_cook_text = Label(fr_cook_esq, text='Art of Control')
+art_of_control_cook_text.grid(column=0, row=2)
+fish_cook_text = Label(fr_cook_esq, text='Fish')
+fish_cook_text.grid(column=0, row=3)
+mastery_lvl_cook_text = Label(fr_cook_esq, text='Mastery Level')
+mastery_lvl_cook_text.grid(column=0, row=4)
+
+def skill_cape_cook():
+    pass
+def art_of_control_cook():
+    pass
+
+var_your_fire = StringVar()
+var_your_fire.set(wood_list[0]) 
+your_fire_cook_resp = OptionMenu(fr_cook_esq, var_your_fire, *wood_list)
+your_fire_cook_resp.grid(column=1, row=0)
+var_skill_cape_cook = IntVar()
+skill_cape_cook_resp = Checkbutton(fr_cook_esq,variable=var_skill_cape_cook, onvalue=1, offvalue=0, command=skill_cape_cook)
+skill_cape_cook_resp.pack()
+skill_cape_cook_resp.grid(column=1, row=1)
+var_art_of_control_cook = IntVar()
+art_of_control_cook_resp = Checkbutton(fr_cook_esq,variable=var_art_of_control_cook, onvalue=1, offvalue=0, command=art_of_control_cook)
+art_of_control_cook_resp.pack()
+art_of_control_cook_resp.grid(column=1, row=2)
+var_fish_cook = StringVar()
+var_fish_cook.set(fish_list[0]) 
+fish_cook_resp = OptionMenu(fr_cook_esq, var_fish_cook, *fish_list)
+fish_cook_resp.grid(column=1, row=3)
+var_mastery_lvl_cook = StringVar()
+var_mastery_lvl_cook.set(lvl_list[0]) 
+mastery_lvl_cook_resp = OptionMenu(fr_cook_esq, var_mastery_lvl_cook, *lvl_list)
+mastery_lvl_cook_resp.grid(column=1, row=4)
+
+# frame 2
+
+burn_rate_cook_text = Label(fr_cook_dir, text='Burn Rate')
+burn_rate_cook_text.grid(column=0, row=0)
+gloves_profit_cook_text = Label(fr_cook_dir, text='Gloves Profit/Loss')
+gloves_profit_cook_text.grid(column=0, row=1)
+xp_hr_cook_text = Label(fr_cook_dir, text='XP/Hr')
+xp_hr_cook_text.grid(column=0, row=2)
+
+burn_rate_cook_resp = Label(fr_cook_dir, text='0%')
+burn_rate_cook_resp.grid(column=1, row=0)
+gloves_profit_cook_resp = Label(fr_cook_dir, text='0')
+gloves_profit_cook_resp.grid(column=1, row=1)
+xp_hr_cook_resp = Label(fr_cook_dir, text='0')
+xp_hr_cook_resp.grid(column=1, row=2)
+
+# frame 3
+
+current_xp_cook_text = Label(fr_cook_dir2, text='Current XP')
+current_xp_cook_text.grid(column=0, row=0)
+desired_lvl_cook_text = Label(fr_cook_dir2, text='Desired Level')
+desired_lvl_cook_text.grid(column=0, row=1)
+fish2_cook_text = Label(fr_cook_dir2, text='Fish')
+fish2_cook_text.grid(column=0, row=2)
+fish_needed_cook_text = Label(fr_cook_dir2, text='Fish Needed')
+fish_needed_cook_text.grid(column=0, row=3)
+
+current_xp_cook_resp = Entry(fr_cook_dir2, width=10)
+current_xp_cook_resp.grid(column=1, row=0)
+var_desired_lvl_cook = StringVar()
+var_desired_lvl_cook.set(lvl_list[0]) 
+desired_lvl_cook_resp = OptionMenu(fr_cook_dir2, var_desired_lvl_cook, *lvl_list)
+desired_lvl_cook_resp.grid(column=1, row=1)
+var_fish2_cook = StringVar()
+var_fish2_cook.set(fish_list[0]) 
+fish2_cook_resp = OptionMenu(fr_cook_dir2, var_fish2_cook, *fish_list)
+fish2_cook_resp.grid(column=1, row=2)
+fish_needed_cook_resp = Label(fr_cook_dir2, text='Fish Needed')
+fish_needed_cook_resp.grid(column=1, row=3)
+
+
+# Xp Calculate
+tab5 = Frame(tabControl)
+tabControl.add(tab5, text='XP Calculate')
+
+fr_xp_calculate_esq = Frame(tab5, borderwidth=1, relief='solid')
 fr_xp_calculate_esq.place(x=0, y=0)
 
 current_xp = Label(fr_xp_calculate_esq, text='Current Xp')
