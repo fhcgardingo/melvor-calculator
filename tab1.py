@@ -1,5 +1,7 @@
 
-num1 = 2.85
-num2 = 10
-num3 = num2 / num1 *3600
-print(round(num3))
+wood_list = ["Normal", "Oak", "Willow", "Teak","Maple", "Mahogany", "Yew", "Magic", "Redwood", "None"]
+
+lista = wood_list
+lista.remove("None")
+
+print(wood_list,lista)

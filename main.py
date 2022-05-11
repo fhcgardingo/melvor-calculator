@@ -11,10 +11,10 @@ import math
 
 root =Tk()
 root.title("Tab Widget")
-root.geometry('600x600')
+root.geometry('770x450')
 
 tabControl = ttk.Notebook(root)
-tabControl.place(x=0, y=0, width=600, height=600)
+tabControl.place(x=0, y=0, width=770, height=450)
 
 # cores
 cor1 = '#3b3b3b'
@@ -525,38 +525,23 @@ logs_needed_fire_resp.grid(column=1, row=5)
 # Cooking
 tab4 = Frame(tabControl)
 tabControl.add(tab4, text='Cooking')
-tab4.columnconfigure(0, weight=1)
-tab4.columnconfigure(1, weight=3)
 
 # frames
-fr_cook_esq = Frame(tab4, borderwidth=1, relief="solid")
-fr_cook_esq.place(x=0, y=0)
+fr_skill_boosts = Frame(tab4, borderwidth=1, relief='solid')
+fr_skill_boosts.place(x=0, y= 0)
+fr_cooking_fire = Frame(tab4, borderwidth=1, relief="solid")
+fr_cooking_fire.place(x=252, y=0)
+fr_furnance = Frame(tab4, borderwidth=1, relief='solid')
+fr_furnance.place(x=400, y=0)
+fr_furnance2 = Frame(tab4, borderwidth=1, relief='solid')
+fr_furnance2.place(x=500, y= 70)
 
-fr_cook_dir = Frame(tab4, borderwidth=1, relief='solid')
-fr_cook_dir.place(x=300, y=0)
-fr_cook_dir2 = Frame(tab4, borderwidth=1, relief='solid')
-fr_cook_dir2.place(x=300, y= 70)
+# lists cooking
+log_list = ["Normal", "Oak", "Willow", "Teak","Maple", "Mahogany", "Yew", "Magic", "Redwood"]
+recipe_cooking_fire_list = ["Shrimp","Beef", "Sardine", "Blowfish", "Herring", "Seahorse", "Trout", "Leaping Trout", "Poison Fish", "Salmon", "Leaping Salmon","Lobster", "Skeleton Fish", "Swordfish", "Anglerfish", "Fanfish", "Crab", "carp", "Shark", "Leaping Broad Fish", "Cave Fish", "Magic Fish", "Manta Fish", "Whale"]           
+cape_skill_cook_list = ["Cape of Completion", "Cooking Skillcape", "Maximum Skillcape","None"]
 
-# frame 1
-cooking_fire_text = Label(fr_cook_esq, text='Cooking Fire')
-cooking_fire_text.grid(row=0, columnspan=2 )
-your_fire_cook_text = Label(fr_cook_esq, text='Your Fire')
-your_fire_cook_text.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
-skill_cape_text = Label(fr_cook_esq, text='Skill Cape/Cooking Gloves')
-skill_cape_text.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
-art_of_control_cook_text = Label(fr_cook_esq, text='Art of Control')
-art_of_control_cook_text.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
-recipe_cook_text = Label(fr_cook_esq, text='Recipe')
-recipe_cook_text.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
-mastery_lvl_cook_text = Label(fr_cook_esq, text='Mastery Level')
-mastery_lvl_cook_text.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
-burn_rate_cook_text = Label(fr_cook_esq, text='Burn Rate')
-burn_rate_cook_text.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
-gloves_profit_cook_text = Label(fr_cook_esq, text='Gloves Profit/Loss')
-gloves_profit_cook_text.grid(column=0, row=7, sticky=tk.W, padx=5, pady=5)
-xp_hr_cook_text = Label(fr_cook_esq, text='XP/Hr')
-xp_hr_cook_text.grid(column=0, row=8, sticky=tk.W, padx=5, pady=5)
-
+# checkbutton functions
 def skill_cape_cook():
     skill_cape_cook = var_skill_cape_cook.get()
     return(skill_cape_cook)
@@ -568,62 +553,132 @@ def art_of_control_cook():
     else:
         return 3
 
-log_list = ["Normal", "Oak", "Willow", "Teak","Maple", "Mahogany", "Yew", "Magic", "Redwood"]
-recipe_cooking_fire_list = ["Shrimp","Beef", "Sardine", "Blowfish", "Herring", "Seahorse", "Trout", "Leaping Trout", "Poison Fish", "Salmon", "Leaping Salmon","Lobster", "Skeleton Fish", "Swordfish", "Anglerfish", "Fanfish", "Crab", "carp", "Shark", "Leaping Broad Fish", "Cave Fish", "Magic Fish", "Manta Fish", "Whale"]           
+def chef_hat():
+    pass
 
+def cooking_apron():
+    pass
+
+def ancient_ring_of_skills():
+    pass    
+
+def chef_spoon():
+    pass
+
+def burning_coals():
+    pass
+
+def sweltering_pools():
+    pass
+
+# frame skill boots
+skill_boosts_cook_text = Label(fr_skill_boosts, text='Skill Boosts')
+skill_boosts_cook_text.grid(columnspan=2, row=0)
+
+cape_skills_text = Label(fr_skill_boosts, text='Select Cape')
+cape_skills_text.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
+var_cape_skills = StringVar()
+var_cape_skills.set(cape_skill_cook_list[3]) 
+cape_skills_resp = OptionMenu(fr_skill_boosts, var_cape_skills, *cape_skill_cook_list)
+cape_skills_resp.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
+
+chef_hat_text = Label(fr_skill_boosts, text="Chef's Hat")
+chef_hat_text.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
+var_chef_hat = IntVar()
+chef_hat_resp = Checkbutton(fr_skill_boosts,variable=var_chef_hat, onvalue=1, offvalue=0, command=chef_hat)
+chef_hat_resp.pack()
+chef_hat_resp.grid(column=1, row=2, sticky=tk.E, padx=5, pady=5)
+
+cooking_apron_text = Label(fr_skill_boosts, text='Cooking Apron')
+cooking_apron_text.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
+var_cooking_apron = IntVar()
+cooking_apron_resp = Checkbutton(fr_skill_boosts,variable=var_cooking_apron, onvalue=1, offvalue=0, command=cooking_apron)
+cooking_apron_resp.pack()
+cooking_apron_resp.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
+
+ancient_ring_of_skills_text = Label(fr_skill_boosts, text='Ancient Ring of Skills')
+ancient_ring_of_skills_text.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
+var_ancient_ring_of_skills = IntVar()
+ancient_ring_of_skills_resp = Checkbutton(fr_skill_boosts,variable=var_ancient_ring_of_skills, onvalue=1, offvalue=0, command=ancient_ring_of_skills)
+ancient_ring_of_skills_resp.pack()
+ancient_ring_of_skills_resp.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
+
+chef_spoon_text = Label(fr_skill_boosts, text="Chef's Spoon")
+chef_spoon_text.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
+var_chef_spoon = IntVar()
+chef_spoon_resp = Checkbutton(fr_skill_boosts,variable=var_chef_spoon, onvalue=1, offvalue=0, command=chef_spoon)
+chef_spoon_resp.pack()
+chef_spoon_resp.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
+
+burning_coals_text = Label(fr_skill_boosts, text='Burning Coals')
+burning_coals_text.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
+var_burning_coals = IntVar()
+burning_coals_resp = Checkbutton(fr_skill_boosts,variable=var_burning_coals, onvalue=1, offvalue=0, command=burning_coals)
+burning_coals_resp.pack()
+burning_coals_resp.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
+
+sweltering_pools_text = Label(fr_skill_boosts, text='Sweltering Pools')
+sweltering_pools_text.grid(column=0, row=7, sticky=tk.W, padx=5, pady=5)  
+var_sweltering_pools = IntVar()
+sweltering_pools_resp = Checkbutton(fr_skill_boosts,variable=var_sweltering_pools, onvalue=1, offvalue=0, command=sweltering_pools)
+sweltering_pools_resp.pack()
+sweltering_pools_resp.grid(column=1, row=7, sticky=tk.E, padx=5, pady=5)
+
+art_of_control_cook_text = Label(fr_skill_boosts, text='Art of Control')
+art_of_control_cook_text.grid(column=0, row=8, sticky=tk.W, padx=5, pady=5)
+var_art_of_control_cook = IntVar()
+art_of_control_cook_resp = Checkbutton(fr_cooking_fire,variable=var_art_of_control_cook, onvalue=1, offvalue=0, command=art_of_control_cook)
+art_of_control_cook_resp.pack()
+art_of_control_cook_resp.grid(column=1, row=8, sticky=tk.E, padx=5, pady=5)
+
+# frame cooking fire
+cooking_fire_text = Label(fr_cooking_fire, text='Cooking Fire')
+cooking_fire_text.grid(row=0, columnspan=2 )
+
+your_fire_cook_text = Label(fr_cooking_fire, text='Your Fire')
+your_fire_cook_text.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
 var_your_fire = StringVar()
 var_your_fire.set(wood_list[0])
-wood_list_fire_cook =  wood_list.remove('None')
-your_fire_cook_resp = OptionMenu(fr_cook_esq, var_your_fire, *log_list)
+your_fire_cook_resp = OptionMenu(fr_cooking_fire, var_your_fire, *log_list)
 your_fire_cook_resp.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
-var_skill_cape_cook = IntVar()
-skill_cape_cook_resp = Checkbutton(fr_cook_esq,variable=var_skill_cape_cook, onvalue=1, offvalue=0, command=skill_cape_cook)
-skill_cape_cook_resp.pack()
-skill_cape_cook_resp.grid(column=1, row=2, sticky=tk.E, padx=5, pady=5)
-var_art_of_control_cook = IntVar()
-art_of_control_cook_resp = Checkbutton(fr_cook_esq,variable=var_art_of_control_cook, onvalue=1, offvalue=0, command=art_of_control_cook)
-art_of_control_cook_resp.pack()
-art_of_control_cook_resp.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
+
+recipe_cook_text = Label(fr_cooking_fire, text='Recipe')
+recipe_cook_text.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
 var_fish_cook = StringVar()
 var_fish_cook.set(recipe_cooking_fire_list[0]) 
-recipe_cook_resp = OptionMenu(fr_cook_esq, var_fish_cook, *recipe_cooking_fire_list)
-recipe_cook_resp.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
+recipe_cook_resp = OptionMenu(fr_cooking_fire, var_fish_cook, *recipe_cooking_fire_list)
+recipe_cook_resp.grid(column=1, row=2, sticky=tk.E, padx=5, pady=5)
+
+mastery_lvl_cook_text = Label(fr_cooking_fire, text='Mastery Level')
+mastery_lvl_cook_text.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
 var_mastery_lvl_cook = IntVar()
 var_mastery_lvl_cook.set(lvl_list[0]) 
-mastery_lvl_cook_resp = OptionMenu(fr_cook_esq, var_mastery_lvl_cook, *lvl_list)
-mastery_lvl_cook_resp.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
-burn_rate_cook_resp = Label(fr_cook_esq, text='0')
-burn_rate_cook_resp.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
-gloves_profit_cook_resp = Label(fr_cook_esq, text='0')
-gloves_profit_cook_resp.grid(column=1, row=7, sticky=tk.E, padx=5, pady=5)
-xp_hr_cook_resp = Label(fr_cook_esq, text='0')
-xp_hr_cook_resp.grid(column=1, row=8, sticky=tk.E, padx=5, pady=5)
+mastery_lvl_cook_resp = OptionMenu(fr_cooking_fire, var_mastery_lvl_cook, *lvl_list)
+mastery_lvl_cook_resp.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
 
-# frame 3
+burn_rate_cook_text = Label(fr_cooking_fire, text='Burn Rate')
+burn_rate_cook_text.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
+burn_rate_cook_resp = Label(fr_cooking_fire, text='0')
+burn_rate_cook_resp.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
 
-current_xp_cook_text = Label(fr_cook_dir2, text='Current XP')
-current_xp_cook_text.grid(column=0, row=0)
-desired_lvl_cook_text = Label(fr_cook_dir2, text='Desired Level')
-desired_lvl_cook_text.grid(column=0, row=1)
-recipe2_cook_text = Label(fr_cook_dir2, text='Recipe')
-recipe2_cook_text.grid(column=0, row=2)
-fish_needed_cook_text = Label(fr_cook_dir2, text='Fish Needed')
-fish_needed_cook_text.grid(column=0, row=3)
+gloves_profit_cook_text = Label(fr_cooking_fire, text='Gloves Profit/Loss')
+gloves_profit_cook_text.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
+gloves_profit_cook_resp = Label(fr_cooking_fire, text='0')
+gloves_profit_cook_resp.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
 
-current_xp_cook_resp = Entry(fr_cook_dir2, width=10)
-current_xp_cook_resp.grid(column=1, row=0)
-var_desired_lvl_cook = StringVar()
-var_desired_lvl_cook.set(lvl_list[0]) 
-desired_lvl_cook_resp = OptionMenu(fr_cook_dir2, var_desired_lvl_cook, *lvl_list)
-desired_lvl_cook_resp.grid(column=1, row=1)
-var_fish2_cook = StringVar()
-var_fish2_cook.set(recipe_cooking_fire_list[0]) 
-recipe2_cook_resp = OptionMenu(fr_cook_dir2, var_fish2_cook, *recipe_cooking_fire_list)
-recipe2_cook_resp.grid(column=1, row=2)
-recipe_needed_cook_resp = Label(fr_cook_dir2, text='Fish Needed')
-recipe_needed_cook_resp.grid(column=1, row=3)
 
-# functions cooking
+xp_hr_cook_text = Label(fr_cooking_fire, text='XP/Hr')
+xp_hr_cook_text.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
+xp_hr_cook_resp = Label(fr_cooking_fire, text='0')
+xp_hr_cook_resp.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
+
+
+var_skill_cape_cook = IntVar()
+skill_cape_cook_resp = Checkbutton(fr_cooking_fire,variable=var_skill_cape_cook, onvalue=1, offvalue=0, command=skill_cape_cook)
+skill_cape_cook_resp.pack()
+skill_cape_cook_resp.grid(column=1, row=8, sticky=tk.E, padx=5, pady=5)
+
+# functions cooking fire
 def fish_cook_xp(typefish):
     type_recipe = typefish
     fire_cooking = var_your_fire.get()
@@ -666,6 +721,41 @@ def xp_hr_cook():
     xp_hr = (cook_rate*(burn_rate_xp*0.01))+((cook_rate*(1-(burn_rate_xp*0.01)))*xp_fish_cook)
     xp_hr_cook_resp['text'] = round(xp_hr)
 
+def button_cooking_fire():
+    gloves_profit_cook()
+    xp_hr_cook()
+
+# cooking fire button    
+
+calculate_cooking = Button(fr_cooking_fire, text='Calcular',command=button_cooking_fire)
+calculate_cooking.grid(columnspan=2, row=7)
+
+# Frame Furnance
+
+# frame 3
+
+current_xp_cook_text = Label(fr_furnance2, text='Current XP')
+current_xp_cook_text.grid(column=0, row=0)
+desired_lvl_cook_text = Label(fr_furnance2, text='Desired Level')
+desired_lvl_cook_text.grid(column=0, row=1)
+recipe2_cook_text = Label(fr_furnance2, text='Recipe')
+recipe2_cook_text.grid(column=0, row=2)
+fish_needed_cook_text = Label(fr_furnance2, text='Fish Needed')
+fish_needed_cook_text.grid(column=0, row=3)
+
+current_xp_cook_resp = Entry(fr_furnance2, width=10)
+current_xp_cook_resp.grid(column=1, row=0)
+var_desired_lvl_cook = StringVar()
+var_desired_lvl_cook.set(lvl_list[0]) 
+desired_lvl_cook_resp = OptionMenu(fr_furnance2, var_desired_lvl_cook, *lvl_list)
+desired_lvl_cook_resp.grid(column=1, row=1)
+var_fish2_cook = StringVar()
+var_fish2_cook.set(recipe_cooking_fire_list[0]) 
+recipe2_cook_resp = OptionMenu(fr_furnance2, var_fish2_cook, *recipe_cooking_fire_list)
+recipe2_cook_resp.grid(column=1, row=2)
+recipe_needed_cook_resp = Label(fr_furnance2, text='Fish Needed')
+recipe_needed_cook_resp.grid(column=1, row=3)
+
 def fish_needed_cook():
     total_xp_fish = total_xp(current_xp_cook_resp.get(), var_desired_lvl_cook.get())
     xp_needed_cook = fish_cook_xp(var_fish2_cook.get())
@@ -674,15 +764,9 @@ def fish_needed_cook():
     fish_needed = total_xp_fish / (xp_needed_cook * (1-(burn_rate_needed*0.01)))
     recipe_needed_cook_resp['text'] = math.ceil(fish_needed)
 
-def button_cooking():
-    gloves_profit_cook()
-    xp_hr_cook()
-    fish_needed_cook()
+# fish needed button
 
-# cooking button    
 
-calculate_cooking = Button(fr_cook_esq, text='Calcular',command=button_cooking)
-calculate_cooking.grid(columnspan=2, row=9)
 
 # Xp Calculate
 tab5 = Frame(tabControl)
