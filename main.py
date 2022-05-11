@@ -5,6 +5,7 @@ from tokenize import String
 import pandas as pd
 import datetime as date
 from pyparsing import col
+import math
 
 root = Tk()
 root.title("Tab Widget")
@@ -15,6 +16,20 @@ tabControl.place(x=0, y=0, width=600, height=600)
 
 # cores
 cor1 = '#3b3b3b'
+
+#global functions
+
+def total_xp(current, desired):
+    current_xp = current
+    desired_level_get = desired
+
+    if current:
+        desired_lvl_df = pd.read_excel('xp.xlsx')
+        desired_lvl = int(desired_lvl_df.loc[desired_lvl_df['level'] == int(desired_level_get), 'exp'])
+        total_xp = desired_lvl - int(current_xp)
+        return total_xp
+    else:
+        return 0
 
 # woodcutting
 tab1 = Frame(tabControl)
@@ -125,18 +140,6 @@ total_logs2_wood_resp.grid(column=1, row=9)
 
 # functions Woodcutting
 
-def get_xp(current, desired):
-    current_xp = current
-    desired_level_get = desired
-
-    if current:
-        desired_lvl_df = pd.read_excel('xp.xlsx')
-        desired_lvl = int(desired_lvl_df.loc[desired_lvl_df['level'] == int(desired_level_get), 'exp'])
-        total_xp = desired_lvl - int(current_xp)
-        return total_xp
-    else:
-        return 0
-
 def adj_cut_time(typetree, typeaxe):
     type_tree = typetree
     type_axe = typeaxe
@@ -175,6 +178,7 @@ def get_exp_tree(typep):
     exp = int(get_exp_tree_df.loc[get_exp_tree_df['Tree'] == type_tree, 'Exp'])
     return exp
 
+#TODO tentar usar somente uma func xp_hr_per_tree passando parametros
 def xp_hr_per_tree1():
     adjcuttime_tree1 = adj_cut_time(var_wood_list1.get(), var_material_axe_list.get())
     type_tree1 = var_wood_list1.get()
@@ -201,6 +205,7 @@ def xp_hr_per_tree2():
         xp_hr_tree2_resp['text'] = (round(xp_hour))
     return (round(xp_hour))
 
+#TODO tentar usar somente uma func logs_hour passando parametros
 def logs_hour1():
     adjcuttime_log1 = adj_cut_time(var_wood_list1.get(), var_material_axe_list.get())
     type_tree_log1 = var_wood_list1.get()
@@ -261,7 +266,7 @@ def total_xp_hr_wood():
     return total_xp_hr
 
 def hours_till_lvl_wood():
-    xp_hour = get_xp(current_xp_wood_resp.get(), var_desired_wood.get())
+    xp_hour = total_xp(current_xp_wood_resp.get(), var_desired_wood.get())
     total_xp = total_xp_hr_wood()
 
     if total_xp != 0:
@@ -275,12 +280,12 @@ def hours_till_lvl_wood():
         hours_till_lvl_wood_resp['text'] = 0
     
 def total_logs1():
-    xp_log1 = get_xp(current_xp_wood_resp.get(), var_desired_wood.get())
+    total_xp_log1 = total_xp(current_xp_wood_resp.get(), var_desired_wood.get())
     total_xp = total_xp_hr_wood()
     type_tree1 = var_wood_list1.get()
 
     if total_xp != 0:
-        hours_till = xp_log1 / total_xp
+        hours_till = total_xp_log1 / total_xp
         hours_round = round(hours_till,2)
         
         logs_hour_df = pd.read_excel('Woodcutting.xlsx')
@@ -291,12 +296,12 @@ def total_logs1():
         total_logs1_wood_resp['text'] = 0
     
 def total_logs2():
-    xp_log2 = get_xp(current_xp_wood_resp.get(), var_desired_wood.get())
+    total_xp_log2 = total_xp(current_xp_wood_resp.get(), var_desired_wood.get())
     total_xp = total_xp_hr_wood()
     type_tree2 = var_wood_list2.get()
 
     if total_xp != 0:
-        hours_till = xp_log2 / total_xp
+        hours_till = total_xp_log2 / total_xp
         hours_round = round(hours_till,2)
         
         logs_hour_df = pd.read_excel('Woodcutting.xlsx')
@@ -613,6 +618,13 @@ fish_needed_cook_resp = Label(fr_cook_dir2, text='Fish Needed')
 fish_needed_cook_resp.grid(column=1, row=3)
 
 # functions cooking
+def fish_xp(typefish):
+    type_fish = typefish
+
+    xp_df = pd.read_excel('cooking.xlsx')
+    xp = int(xp_df.loc[xp_df['Fish'] == type_fish,'Xp'])
+    return xp 
+
 
 def burn_rate_cook():
     if skill_cape_cook() == 1:
@@ -640,24 +652,27 @@ def gloves_profit_cook():
 
 #FIXME ao executar xp_hr_cook a função burn_rate_cook tambem execura, corrigir.
 def xp_hr_cook():
-    type_fish = var_fish_cook.get()
+    xp_fish_cook = fish_xp(var_fish_cook.get())
     cook_rate = 3600/art_of_control_cook() 
-    burn_rate = burn_rate_cook()
+    burn_rate_xp = burn_rate_cook()
     
-    xp_df = pd.read_excel('cooking.xlsx')
-    xp = int(xp_df.loc[xp_df['Fish'] == type_fish,'Xp'])
-    xp_hr = (cook_rate*(burn_rate*0.01))+((cook_rate*(1-(burn_rate*0.01)))*xp)
-    xp_hr_cook_resp['text'] = round(xp)
+    xp_hr = (cook_rate*(burn_rate_xp*0.01))+((cook_rate*(1-(burn_rate_xp*0.01)))*xp_fish_cook)
+    xp_hr_cook_resp['text'] = round(xp_hr)
 
-#TODO terminar fish_needed_cook
 def fish_needed_cook():
-    pass
+    total_xp_fish = total_xp(current_xp_cook_resp.get(), var_desired_lvl_cook.get())
+    xp_needed_cook = fish_xp(var_fish2_cook.get())
+    burn_rate_needed = burn_rate_cook()
+
+
+    fish_needed = total_xp_fish / (xp_needed_cook * (1-(burn_rate_needed*0.01)))
+    fish_needed_cook_resp['text'] = math.ceil(fish_needed)
 
 
 
 # cooking button    
 
-calculate_cooking = Button(fr_cook_esq, text='Calcular',command=xp_hr_cook)
+calculate_cooking = Button(fr_cook_esq, text='Calcular',command=fish_needed_cook)
 calculate_cooking.grid(column=0, row=6)
 
 # Xp Calculate
