@@ -29,18 +29,28 @@ fr_wood_dir.place(x=266, y=0)
 
 
 # fr esquerdo woodcutting
-tree1 = Label(fr_wood_esq, text="Tree 1")
-tree1.grid(column=0, row=0)
-tree2 = Label(fr_wood_esq, text="Tree 2")
-tree2.grid(column=0, row=1)
-skillcape_wood = Label(fr_wood_esq, text="Skill Cape")
-skillcape_wood.grid(column=0, row=2)
-master_wood = Label(fr_wood_esq, text="Master of Nature")
-master_wood.grid(column=0, row=3)
-current_wood = Label(fr_wood_esq, text="Current Axe")
-current_wood.grid(column=0, row=4)
-mastery_wood = Label(fr_wood_esq, text="Mastery")
-mastery_wood.grid(column=0, row=5)
+
+
+tree1_wood_text = Label(fr_wood_esq, text="Tree 1")
+tree1_wood_text.grid(column=0, row=0)
+tree2_wood_text = Label(fr_wood_esq, text="Tree 2")
+tree2_wood_text.grid(column=0, row=1)
+skillcape_wood_text = Label(fr_wood_esq, text="Skill Cape")
+skillcape_wood_text.grid(column=0, row=2)
+master_wood_text = Label(fr_wood_esq, text="Master of Nature")
+master_wood_text.grid(column=0, row=3)
+current_wood_text = Label(fr_wood_esq, text="Current Axe")
+current_wood_text.grid(column=0, row=4)
+mastery_wood_text = Label(fr_wood_esq, text="Mastery")
+mastery_wood_text.grid(column=0, row=5)
+
+def skillcape_wood():
+    skillcape_wood = var_skillcape_wood.get()
+    return(skillcape_wood)
+
+def master_wood():
+    master_wood = var_master_wood.get()
+    return(master_wood)
 
 wood_list = ["Normal", "Oak", "Willow", "Teak",
              "Maple", "Mahogany", "Yew", "Magic", "Redwood", "None"]
@@ -48,10 +58,10 @@ var_wood_list1 = StringVar()
 var_wood_list1.set(wood_list[0])
 var_wood_list2 = StringVar()
 var_wood_list2.set(wood_list[9])
-tree1_resp = OptionMenu(fr_wood_esq, var_wood_list1, *wood_list)
-tree1_resp.grid(column=1, row=0)
-tree2_resp = OptionMenu(fr_wood_esq, var_wood_list2, *wood_list)
-tree2_resp.grid(column=1, row=1)
+tree1_wood_resp = OptionMenu(fr_wood_esq, var_wood_list1, *wood_list)
+tree1_wood_resp.grid(column=1, row=0)
+tree2_wood_resp = OptionMenu(fr_wood_esq, var_wood_list2, *wood_list)
+tree2_wood_resp.grid(column=1, row=1)
 var_skillcape_wood = IntVar()
 skillcape_wood_resp = Checkbutton(fr_wood_esq,variable=var_skillcape_wood, onvalue=1, offvalue=0, command=skillcape_wood)
 skillcape_wood_resp.pack()
@@ -148,8 +158,8 @@ def adj_cut_time(typetree, typeaxe):
     else:
         percent_axe = 1
     
-    master_of_nature = var_master_wood.get()
-    if master_of_nature == "Yes":
+    master_of_nature = master_wood()
+    if master_of_nature == 1:
         percent_master = 0.80
     else:
         percent_master = 1
@@ -196,7 +206,7 @@ def logs_hour1():
     type_tree_log1 = var_wood_list1.get()
     level_log1 = var_mastery_wood.get()
 
-    skill_cape = var_skillcape_wood.get()
+    skill_cape = skillcape_wood()
     if skill_cape == 1:
         percent_skill = 2
     else:
@@ -217,7 +227,7 @@ def logs_hour2():
     type_tree_log2 = var_wood_list2.get()
     level_log2 = var_mastery_wood.get()
 
-    skill_cape = var_skillcape_wood.get()
+    skill_cape = skillcape_wood()
     if skill_cape == 1:
         percent_skill = 2
     else:
@@ -442,6 +452,7 @@ controlled_heat_text = Label(fr_fire_esq, text='Controlled Heat')
 controlled_heat_text.grid(column=0, row=4)
 
 #functions checkbuttons
+#TODO terminar funções
 def art_of_control():
     pass
 def lvl_fire():
