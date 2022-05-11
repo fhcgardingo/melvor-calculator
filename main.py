@@ -52,14 +52,13 @@ tree1_resp = OptionMenu(fr_wood_esq, var_wood_list1, *wood_list)
 tree1_resp.grid(column=1, row=0)
 tree2_resp = OptionMenu(fr_wood_esq, var_wood_list2, *wood_list)
 tree2_resp.grid(column=1, row=1)
-yes_no_list = ["No", "Yes"]
-var_skill_cape = StringVar()
-var_skill_cape.set(yes_no_list[0])
-var_master_of_nature = StringVar()
-var_master_of_nature.set(yes_no_list[0])
-skill_wood_resp = OptionMenu(fr_wood_esq, var_skill_cape, *yes_no_list)
-skill_wood_resp.grid(column=1, row=2)
-master_wood_resp = OptionMenu(fr_wood_esq, var_master_of_nature, *yes_no_list)
+var_skillcape_wood = IntVar()
+skillcape_wood_resp = Checkbutton(fr_wood_esq,variable=var_skillcape_wood, onvalue=1, offvalue=0, command=skillcape_wood)
+skillcape_wood_resp.pack()
+skillcape_wood_resp.grid(column=1, row=2)
+var_master_wood = IntVar()
+master_wood_resp = Checkbutton(fr_wood_esq,variable=var_master_wood, onvalue=1, offvalue=0, command=master_wood)
+master_wood_resp.pack()
 master_wood_resp.grid(column=1, row=3)
 axe_list = ["Base", "Iron", "Steel", "Black",
             "Mithril", "Adamant", "Rune", "Dragon"]
@@ -149,7 +148,7 @@ def adj_cut_time(typetree, typeaxe):
     else:
         percent_axe = 1
     
-    master_of_nature = var_master_of_nature.get()
+    master_of_nature = var_master_wood.get()
     if master_of_nature == "Yes":
         percent_master = 0.80
     else:
@@ -197,8 +196,8 @@ def logs_hour1():
     type_tree_log1 = var_wood_list1.get()
     level_log1 = var_mastery_wood.get()
 
-    skill_cape = var_skill_cape.get()
-    if skill_cape == "Yes":
+    skill_cape = var_skillcape_wood.get()
+    if skill_cape == 1:
         percent_skill = 2
     else:
         percent_skill = 1
@@ -218,8 +217,8 @@ def logs_hour2():
     type_tree_log2 = var_wood_list2.get()
     level_log2 = var_mastery_wood.get()
 
-    skill_cape = var_skill_cape.get()
-    if skill_cape == "Yes":
+    skill_cape = var_skillcape_wood.get()
+    if skill_cape == 1:
         percent_skill = 2
     else:
         percent_skill = 1
@@ -340,6 +339,19 @@ amulet_text.grid(column=0, row=6)
 pirates_text = Label(fr_fish_esq, text="Pirates Lost Ring")
 pirates_text.grid(column=0, row=7)
 
+#TODO terminar funções
+def pet_fish():
+    pass
+
+def skill_fish():
+    pass
+
+def amulet_fish():
+    pass
+
+def pirate_fish():
+    pass   
+
 rod_list = ["Base", "Iron", "Steel", "Balck", "Mithril", "Adamant", "Rune", "Dragon"]
 var_rod_fish = StringVar()
 var_rod_fish.set(rod_list[0])
@@ -350,13 +362,15 @@ var_fish_list = StringVar()
 var_fish_list.set(fish_list[0])
 fish_resp = OptionMenu(fr_fish_esq, var_fish_list, *fish_list)
 fish_resp.grid(column=1, row=1)
-var_pet_fish = StringVar()
-pet_fish_resp = OptionMenu(fr_fish_esq, var_pet_fish, *yes_no_list)
+var_pet_fish = IntVar()
+pet_fish_resp = Checkbutton(fr_fish_esq,variable=var_pet_fish, onvalue=1, offvalue=0, command=pet_fish)
+pet_fish_resp.pack()
 pet_fish_resp.grid(column=1, row=2)
-var_skill_fish = StringVar()
-skill_fish_resp = OptionMenu(fr_fish_esq, var_skill_fish, *yes_no_list)
+var_skill_fish = IntVar()
+skill_fish_resp = Checkbutton(fr_fish_esq,variable=var_skill_fish, onvalue=1, offvalue=0, command=skill_fish)
+skill_fish_resp.pack()
 skill_fish_resp.grid(column=1, row=3)
-var_mastery_fish = StringVar()
+var_mastery_fish = IntVar()
 mastery_fish_resp = OptionMenu(fr_fish_esq, var_mastery_fish, *lvl_list)
 mastery_fish_resp.grid(column=1, row=4)
 potion_list = ["No", "1", "2", "3", "4"]
@@ -364,13 +378,13 @@ var_potion_fish = StringVar()
 var_potion_fish.set(potion_list[0])
 potion_fish_resp = OptionMenu(fr_fish_esq, var_potion_fish, *potion_list)
 potion_fish_resp.grid(column=1, row=5)
-var_amulet_fish = StringVar()
-var_amulet_fish.set(yes_no_list[0])
-amulet_fish_resp = OptionMenu(fr_fish_esq, var_amulet_fish, *yes_no_list)
+var_amulet_fish = IntVar()
+amulet_fish_resp = Checkbutton(fr_fish_esq,variable=var_amulet_fish, onvalue=1, offvalue=0, command=amulet_fish)
+amulet_fish_resp.pack()
 amulet_fish_resp.grid(column=1, row=6)
-var_pirate_fish = StringVar()
-var_pirate_fish.set(yes_no_list[0])
-pirate_fish_resp = OptionMenu(fr_fish_esq, var_pirate_fish, *yes_no_list)
+var_pirate_fish = IntVar()
+pirate_fish_resp = Checkbutton(fr_fish_esq,variable=var_pirate_fish, onvalue=1, offvalue=0, command=pirate_fish)
+pirate_fish_resp.pack()
 pirate_fish_resp.grid(column=1, row=7)
 
 # frame 2
@@ -624,6 +638,7 @@ def xp_hr_cook():
     xp_hr = (cook_rate*(burn_rate*0.01))+((cook_rate*(1-(burn_rate*0.01)))*xp)
     xp_hr_cook_resp['text'] = round(xp)
 
+#TODO terminar fish_needed_cook
 def fish_needed_cook():
     pass
 
