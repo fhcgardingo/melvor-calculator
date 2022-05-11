@@ -1,5 +1,6 @@
 # importando tkinter
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from tokenize import String
 import pandas as pd
@@ -7,7 +8,8 @@ import datetime as date
 from pyparsing import col
 import math
 
-root = Tk()
+
+root =Tk()
 root.title("Tab Widget")
 root.geometry('600x600')
 
@@ -523,27 +525,37 @@ logs_needed_fire_resp.grid(column=1, row=5)
 # Cooking
 tab4 = Frame(tabControl)
 tabControl.add(tab4, text='Cooking')
+tab4.columnconfigure(0, weight=1)
+tab4.columnconfigure(1, weight=3)
 
 # frames
 fr_cook_esq = Frame(tab4, borderwidth=1, relief="solid")
 fr_cook_esq.place(x=0, y=0)
+
 fr_cook_dir = Frame(tab4, borderwidth=1, relief='solid')
-fr_cook_dir.place(x=280, y=0)
+fr_cook_dir.place(x=300, y=0)
 fr_cook_dir2 = Frame(tab4, borderwidth=1, relief='solid')
-fr_cook_dir2.place(x=280, y= 70)
+fr_cook_dir2.place(x=300, y= 70)
 
 # frame 1
-
+cooking_fire_text = Label(fr_cook_esq, text='Cooking Fire')
+cooking_fire_text.grid(row=0, columnspan=2 )
 your_fire_cook_text = Label(fr_cook_esq, text='Your Fire')
-your_fire_cook_text.grid(column=0, row=0)
+your_fire_cook_text.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
 skill_cape_text = Label(fr_cook_esq, text='Skill Cape/Cooking Gloves')
-skill_cape_text.grid(column=0, row=1)
+skill_cape_text.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)
 art_of_control_cook_text = Label(fr_cook_esq, text='Art of Control')
-art_of_control_cook_text.grid(column=0, row=2)
-fish_cook_text = Label(fr_cook_esq, text='Fish')
-fish_cook_text.grid(column=0, row=3)
+art_of_control_cook_text.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
+recipe_cook_text = Label(fr_cook_esq, text='Recipe')
+recipe_cook_text.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
 mastery_lvl_cook_text = Label(fr_cook_esq, text='Mastery Level')
-mastery_lvl_cook_text.grid(column=0, row=4)
+mastery_lvl_cook_text.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
+burn_rate_cook_text = Label(fr_cook_esq, text='Burn Rate')
+burn_rate_cook_text.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
+gloves_profit_cook_text = Label(fr_cook_esq, text='Gloves Profit/Loss')
+gloves_profit_cook_text.grid(column=0, row=7, sticky=tk.W, padx=5, pady=5)
+xp_hr_cook_text = Label(fr_cook_esq, text='XP/Hr')
+xp_hr_cook_text.grid(column=0, row=8, sticky=tk.W, padx=5, pady=5)
 
 def skill_cape_cook():
     skill_cape_cook = var_skill_cape_cook.get()
@@ -556,42 +568,36 @@ def art_of_control_cook():
     else:
         return 3
 
+log_list = ["Normal", "Oak", "Willow", "Teak","Maple", "Mahogany", "Yew", "Magic", "Redwood"]
+recipe_cooking_fire_list = ["Shrimp","Beef", "Sardine", "Blowfish", "Herring", "Seahorse", "Trout", "Leaping Trout", "Poison Fish", "Salmon", "Leaping Salmon","Lobster", "Skeleton Fish", "Swordfish", "Anglerfish", "Fanfish", "Crab", "carp", "Shark", "Leaping Broad Fish", "Cave Fish", "Magic Fish", "Manta Fish", "Whale"]           
+
 var_your_fire = StringVar()
-var_your_fire.set(wood_list[0]) 
-your_fire_cook_resp = OptionMenu(fr_cook_esq, var_your_fire, *wood_list)
-your_fire_cook_resp.grid(column=1, row=0)
+var_your_fire.set(wood_list[0])
+wood_list_fire_cook =  wood_list.remove('None')
+your_fire_cook_resp = OptionMenu(fr_cook_esq, var_your_fire, *log_list)
+your_fire_cook_resp.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
 var_skill_cape_cook = IntVar()
 skill_cape_cook_resp = Checkbutton(fr_cook_esq,variable=var_skill_cape_cook, onvalue=1, offvalue=0, command=skill_cape_cook)
 skill_cape_cook_resp.pack()
-skill_cape_cook_resp.grid(column=1, row=1)
+skill_cape_cook_resp.grid(column=1, row=2, sticky=tk.E, padx=5, pady=5)
 var_art_of_control_cook = IntVar()
 art_of_control_cook_resp = Checkbutton(fr_cook_esq,variable=var_art_of_control_cook, onvalue=1, offvalue=0, command=art_of_control_cook)
 art_of_control_cook_resp.pack()
-art_of_control_cook_resp.grid(column=1, row=2)
+art_of_control_cook_resp.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
 var_fish_cook = StringVar()
-var_fish_cook.set(fish_list[0]) 
-fish_cook_resp = OptionMenu(fr_cook_esq, var_fish_cook, *fish_list)
-fish_cook_resp.grid(column=1, row=3)
+var_fish_cook.set(recipe_cooking_fire_list[0]) 
+recipe_cook_resp = OptionMenu(fr_cook_esq, var_fish_cook, *recipe_cooking_fire_list)
+recipe_cook_resp.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
 var_mastery_lvl_cook = IntVar()
 var_mastery_lvl_cook.set(lvl_list[0]) 
 mastery_lvl_cook_resp = OptionMenu(fr_cook_esq, var_mastery_lvl_cook, *lvl_list)
-mastery_lvl_cook_resp.grid(column=1, row=4)
-
-# frame 2
-
-burn_rate_cook_text = Label(fr_cook_dir, text='Burn Rate')
-burn_rate_cook_text.grid(column=0, row=0)
-gloves_profit_cook_text = Label(fr_cook_dir, text='Gloves Profit/Loss')
-gloves_profit_cook_text.grid(column=0, row=1)
-xp_hr_cook_text = Label(fr_cook_dir, text='XP/Hr')
-xp_hr_cook_text.grid(column=0, row=2)
-
-burn_rate_cook_resp = Label(fr_cook_dir, text='0')
-burn_rate_cook_resp.grid(column=1, row=0)
-gloves_profit_cook_resp = Label(fr_cook_dir, text='0')
-gloves_profit_cook_resp.grid(column=1, row=1)
-xp_hr_cook_resp = Label(fr_cook_dir, text='0')
-xp_hr_cook_resp.grid(column=1, row=2)
+mastery_lvl_cook_resp.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
+burn_rate_cook_resp = Label(fr_cook_esq, text='0')
+burn_rate_cook_resp.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
+gloves_profit_cook_resp = Label(fr_cook_esq, text='0')
+gloves_profit_cook_resp.grid(column=1, row=7, sticky=tk.E, padx=5, pady=5)
+xp_hr_cook_resp = Label(fr_cook_esq, text='0')
+xp_hr_cook_resp.grid(column=1, row=8, sticky=tk.E, padx=5, pady=5)
 
 # frame 3
 
@@ -599,8 +605,8 @@ current_xp_cook_text = Label(fr_cook_dir2, text='Current XP')
 current_xp_cook_text.grid(column=0, row=0)
 desired_lvl_cook_text = Label(fr_cook_dir2, text='Desired Level')
 desired_lvl_cook_text.grid(column=0, row=1)
-fish2_cook_text = Label(fr_cook_dir2, text='Fish')
-fish2_cook_text.grid(column=0, row=2)
+recipe2_cook_text = Label(fr_cook_dir2, text='Recipe')
+recipe2_cook_text.grid(column=0, row=2)
 fish_needed_cook_text = Label(fr_cook_dir2, text='Fish Needed')
 fish_needed_cook_text.grid(column=0, row=3)
 
@@ -611,20 +617,21 @@ var_desired_lvl_cook.set(lvl_list[0])
 desired_lvl_cook_resp = OptionMenu(fr_cook_dir2, var_desired_lvl_cook, *lvl_list)
 desired_lvl_cook_resp.grid(column=1, row=1)
 var_fish2_cook = StringVar()
-var_fish2_cook.set(fish_list[0]) 
-fish2_cook_resp = OptionMenu(fr_cook_dir2, var_fish2_cook, *fish_list)
-fish2_cook_resp.grid(column=1, row=2)
-fish_needed_cook_resp = Label(fr_cook_dir2, text='Fish Needed')
-fish_needed_cook_resp.grid(column=1, row=3)
+var_fish2_cook.set(recipe_cooking_fire_list[0]) 
+recipe2_cook_resp = OptionMenu(fr_cook_dir2, var_fish2_cook, *recipe_cooking_fire_list)
+recipe2_cook_resp.grid(column=1, row=2)
+recipe_needed_cook_resp = Label(fr_cook_dir2, text='Fish Needed')
+recipe_needed_cook_resp.grid(column=1, row=3)
 
 # functions cooking
-def fish_xp(typefish):
-    type_fish = typefish
+def fish_cook_xp(typefish):
+    type_recipe = typefish
+    fire_cooking = var_your_fire.get()
 
     xp_df = pd.read_excel('cooking.xlsx')
-    xp = int(xp_df.loc[xp_df['Fish'] == type_fish,'Xp'])
+    bonus_xp = int(xp_df.loc[xp_df['Logs'] == fire_cooking, 'Bonus Xp'])
+    xp = (int(xp_df.loc[xp_df['Recipe Cooking Fire'] == type_recipe,'Xp']))*(1+(bonus_xp*0.01))
     return xp 
-
 
 def burn_rate_cook():
     if skill_cape_cook() == 1:
@@ -642,17 +649,17 @@ def burn_rate_cook():
 
 #FIXME ao executar gloves_profit_cook a função burn_rate_cook tambem executa, corrigir.
 def gloves_profit_cook():
-    type_fish = var_fish_cook.get()
+    type_recipe = var_fish_cook.get()
     burn_rate = burn_rate_cook()
 
     cooking_df = pd.read_excel('cooking.xlsx')
-    value = int(cooking_df.loc[cooking_df['Fish'] == type_fish, 'Value'])
+    value = int(cooking_df.loc[cooking_df['Recipe Cooking Fire'] == type_recipe, 'Value'])
     gloves_profit = ((500*value)-((500*(1-(burn_rate*0.01)))*value))-50000
     gloves_profit_cook_resp['text'] = round(gloves_profit)
 
 #FIXME ao executar xp_hr_cook a função burn_rate_cook tambem execura, corrigir.
 def xp_hr_cook():
-    xp_fish_cook = fish_xp(var_fish_cook.get())
+    xp_fish_cook = fish_cook_xp(var_fish_cook.get())
     cook_rate = 3600/art_of_control_cook() 
     burn_rate_xp = burn_rate_cook()
     
@@ -661,19 +668,21 @@ def xp_hr_cook():
 
 def fish_needed_cook():
     total_xp_fish = total_xp(current_xp_cook_resp.get(), var_desired_lvl_cook.get())
-    xp_needed_cook = fish_xp(var_fish2_cook.get())
+    xp_needed_cook = fish_cook_xp(var_fish2_cook.get())
     burn_rate_needed = burn_rate_cook()
 
-
     fish_needed = total_xp_fish / (xp_needed_cook * (1-(burn_rate_needed*0.01)))
-    fish_needed_cook_resp['text'] = math.ceil(fish_needed)
+    recipe_needed_cook_resp['text'] = math.ceil(fish_needed)
 
-
+def button_cooking():
+    gloves_profit_cook()
+    xp_hr_cook()
+    fish_needed_cook()
 
 # cooking button    
 
-calculate_cooking = Button(fr_cook_esq, text='Calcular',command=fish_needed_cook)
-calculate_cooking.grid(column=0, row=6)
+calculate_cooking = Button(fr_cook_esq, text='Calcular',command=button_cooking)
+calculate_cooking.grid(columnspan=2, row=9)
 
 # Xp Calculate
 tab5 = Frame(tabControl)
