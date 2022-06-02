@@ -63,11 +63,11 @@ mastery_wood_text.grid(column=0, row=5)
 
 def skillcape_wood():
     skillcape_wood = var_skillcape_wood.get()
-    return(skillcape_wood)
+    return skillcape_wood
 
 def master_wood():
     master_wood = var_master_wood.get()
-    return(master_wood)
+    return master_wood
 
 wood_list = ["Normal", "Oak", "Willow", "Teak",
              "Maple", "Mahogany", "Yew", "Magic", "Redwood", "None"]
@@ -100,12 +100,12 @@ mastery_wood_resp = OptionMenu(fr_wood_esq, var_mastery_wood, *lvl_list)
 mastery_wood_resp.grid(column=1, row=5)
 
 # fr direito woodcutting
-xp_hr_tree_text = Label(fr_wood_dir, text='Xp/Hr per Tree')
-xp_hr_tree_text.grid(column=0, row=0)
+xp_skill_hr_tree_text = Label(fr_wood_dir, text='Xp/Hr per Tree')
+xp_skill_hr_tree_text.grid(column=0, row=0)
 logs_hour_text = Label(fr_wood_dir, text='Logs/Hour')
 logs_hour_text.grid(column=1, row=0)
-total_xp_hr_text = Label(fr_wood_dir, text='Total Xp/Hr')
-total_xp_hr_text.grid(column=0, row=4)
+total_xp_skill_hr_text = Label(fr_wood_dir, text='Total Xp/Hr')
+total_xp_skill_hr_text.grid(column=0, row=4)
 current_xp_wood_text = Label(fr_wood_dir, text='Current Xp')
 current_xp_wood_text.grid(column=0, row=5)
 desired_lvl_wood_text = Label(fr_wood_dir, text='Desired Level')
@@ -118,16 +118,16 @@ total_logs2_wood_text =  Label(fr_wood_dir, text='Total Logs2')
 total_logs2_wood_text.grid(column=0, row=9)
 
 
-xp_hr_tree1_resp = Label(fr_wood_dir, text='0')
-xp_hr_tree1_resp.grid(column=0, row=2)
-xp_hr_tree2_resp = Label(fr_wood_dir, text='0')
-xp_hr_tree2_resp.grid(column=0, row=3)
+xp_skill_hr_tree1_resp = Label(fr_wood_dir, text='0')
+xp_skill_hr_tree1_resp.grid(column=0, row=2)
+xp_skill_hr_tree2_resp = Label(fr_wood_dir, text='0')
+xp_skill_hr_tree2_resp.grid(column=0, row=3)
 logs_hour1_resp = Label(fr_wood_dir, text='0')
 logs_hour1_resp.grid(column=1, row=2)
 logs_hour2_resp = Label(fr_wood_dir, text='0')
 logs_hour2_resp.grid(column=1, row=3)
-total_xp_hr_resp = Label(fr_wood_dir, text='0')
-total_xp_hr_resp.grid(column=1, row=4)
+total_xp_skill_hr_resp = Label(fr_wood_dir, text='0')
+total_xp_skill_hr_resp.grid(column=1, row=4)
 current_xp_wood_resp = Entry(fr_wood_dir, width=10)
 current_xp_wood_resp.grid(column=1, row=5)
 var_desired_wood = StringVar()
@@ -180,31 +180,31 @@ def get_exp_tree(typep):
     exp = int(get_exp_tree_df.loc[get_exp_tree_df['Tree'] == type_tree, 'Exp'])
     return exp
 
-#TODO tentar usar somente uma func xp_hr_per_tree passando parametros
-def xp_hr_per_tree1():
+#TODO tentar usar somente uma func xp_skill_hr_per_tree passando parametros
+def xp_skill_hr_per_tree1():
     adjcuttime_tree1 = adj_cut_time(var_wood_list1.get(), var_material_axe_list.get())
     type_tree1 = var_wood_list1.get()
     exp_tree1 = get_exp_tree(type_tree1)
 
     if (exp_tree1 == 0) or (type_tree1 == 'None'):
-        xp_hr_tree1_resp['text'] = 0
+        xp_skill_hr_tree1_resp['text'] = 0
         xp_hour = 0
     else:
         xp_hour = exp_tree1 / (round(adjcuttime_tree1, 2)) * 3600
-        xp_hr_tree1_resp['text'] = (round(xp_hour))
+        xp_skill_hr_tree1_resp['text'] = (round(xp_hour))
     return (round(xp_hour))
 
-def xp_hr_per_tree2():
+def xp_skill_hr_per_tree2():
     adjcuttime_tree2 = adj_cut_time(var_wood_list2.get(),var_material_axe_list.get())
     type_tree2 = var_wood_list2.get()
     exp_tree2 = get_exp_tree(type_tree2)
 
     if (exp_tree2 == 0) or (type_tree2 == 'None'):
-        xp_hr_tree2_resp['text'] = 0
+        xp_skill_hr_tree2_resp['text'] = 0
         xp_hour = 0
     else:
         xp_hour = exp_tree2 / (round(adjcuttime_tree2, 2)) * 3600
-        xp_hr_tree2_resp['text'] = (round(xp_hour))
+        xp_skill_hr_tree2_resp['text'] = (round(xp_hour))
     return (round(xp_hour))
 
 #TODO tentar usar somente uma func logs_hour passando parametros
@@ -250,26 +250,26 @@ def logs_hour2():
     else:
         logs_hour2_resp['text'] = 0
 
-def total_xp_hr_wood():
-    xp_tree1 = xp_hr_per_tree1()
-    xp_tree2 = xp_hr_per_tree2()
+def total_xp_skill_hr_wood():
+    xp_tree1 = xp_skill_hr_per_tree1()
+    xp_tree2 = xp_skill_hr_per_tree2()
 
     if (xp_tree1 != 0) and (xp_tree2 != 0):
-        total_xp_hr = xp_tree1 + xp_tree2
+        total_xp_skill_hr = xp_tree1 + xp_tree2
     elif (xp_tree1 != 0) and (xp_tree2 == 0):
-        total_xp_hr = xp_tree1
+        total_xp_skill_hr = xp_tree1
     elif (xp_tree1 == 0) and (xp_tree2 != 0):
-        total_xp_hr = xp_tree2
+        total_xp_skill_hr = xp_tree2
     else:
-        total_xp_hr = 0
+        total_xp_skill_hr = 0
 
-    total_xp_hr_resp['text'] = total_xp_hr
-    # print(total_xp_hr)
-    return total_xp_hr
+    total_xp_skill_hr_resp['text'] = total_xp_skill_hr
+    # print(total_xp_skill_hr)
+    return total_xp_skill_hr
 
 def hours_till_lvl_wood():
     xp_hour = total_xp(current_xp_wood_resp.get(), var_desired_wood.get())
-    total_xp = total_xp_hr_wood()
+    total_xp = total_xp_skill_hr_wood()
 
     if total_xp != 0:
         hours_till = xp_hour / total_xp
@@ -283,7 +283,7 @@ def hours_till_lvl_wood():
     
 def total_logs1():
     total_xp_log1 = total_xp(current_xp_wood_resp.get(), var_desired_wood.get())
-    total_xp = total_xp_hr_wood()
+    total_xp = total_xp_skill_hr_wood()
     type_tree1 = var_wood_list1.get()
 
     if total_xp != 0:
@@ -299,7 +299,7 @@ def total_logs1():
     
 def total_logs2():
     total_xp_log2 = total_xp(current_xp_wood_resp.get(), var_desired_wood.get())
-    total_xp = total_xp_hr_wood()
+    total_xp = total_xp_skill_hr_wood()
     type_tree2 = var_wood_list2.get()
 
     if total_xp != 0:
@@ -314,11 +314,11 @@ def total_logs2():
         total_logs2_wood_resp['text'] = 0
 
 def button_calculate():
-    xp_hr_per_tree1()
-    xp_hr_per_tree2()
+    xp_skill_hr_per_tree1()
+    xp_skill_hr_per_tree2()
     logs_hour1()
     logs_hour2()
-    total_xp_hr_wood()
+    total_xp_skill_hr_wood()
     hours_till_lvl_wood()
     total_logs1()
     total_logs2()
@@ -407,8 +407,8 @@ pirate_fish_resp.grid(column=1, row=7)
 # frame 2
 fish_hr_text = Label(fr_fish_dir, text="Fish/Hr")
 fish_hr_text.grid(column=0, row=0)
-xp_hr_text = Label(fr_fish_dir, text="Xp/Hr")
-xp_hr_text.grid(column=0, row=1)
+xp_skill_hr_text = Label(fr_fish_dir, text="Xp/Hr")
+xp_skill_hr_text.grid(column=0, row=1)
 gp_hr_text = Label(fr_fish_dir, text="Gp/Hr")
 gp_hr_text.grid(column=0, row=2)
 current_text = Label(fr_fish_dir, text="Current Xp")
@@ -494,8 +494,8 @@ controlled_heat_resp.grid(column=1, row=4)
 
 xp_log_fire_text = Label(fr_fire_dir, text='XP/Log')
 xp_log_fire_text.grid(column=0, row=0)
-xp_hr_fire_text = Label(fr_fire_dir, text='XP/Hr')
-xp_hr_fire_text.grid(column=0, row=1)
+xp_skill_hr_fire_text = Label(fr_fire_dir, text='XP/Hr')
+xp_skill_hr_fire_text.grid(column=0, row=1)
 coal_hr_fire_text = Label(fr_fire_dir, text='Caol/Hr')
 coal_hr_fire_text.grid(column=0, row=2)
 current_xp_fire_text = Label(fr_fire_dir, text='Current XP')
@@ -507,8 +507,8 @@ logs_needed_fire_text.grid(column=0, row=5)
 
 xp_log_fire_resp = Label(fr_fire_dir, text='0')
 xp_log_fire_resp.grid(column=1, row=0)
-xp_hr_fire_resp = Label(fr_fire_dir, text='0')
-xp_hr_fire_resp.grid(column=1, row=1)
+xp_skill_hr_fire_resp = Label(fr_fire_dir, text='0')
+xp_skill_hr_fire_resp.grid(column=1, row=1)
 coal_hr_fire_resp = Label(fr_fire_dir, text='0')
 coal_hr_fire_resp.grid(column=1, row=2)
 current_xp_fire_resp = Entry(fr_fire_dir, width=10)
@@ -541,35 +541,84 @@ log_list = ["Normal", "Oak", "Willow", "Teak","Maple", "Mahogany", "Yew", "Magic
 recipe_cooking_fire_list = ["Shrimp","Beef", "Sardine", "Blowfish", "Herring", "Seahorse", "Trout", "Leaping Trout", "Poison Fish", "Salmon", "Leaping Salmon","Lobster", "Skeleton Fish", "Swordfish", "Anglerfish", "Fanfish", "Crab", "carp", "Shark", "Leaping Broad Fish", "Cave Fish", "Magic Fish", "Manta Fish", "Whale"]           
 cape_skill_cook_list = ["Cape of Completion", "Cooking Skillcape", "Maximum Skillcape","None"]
 
+# classes
+
+class items:
+    def __init__(self, ckint, xpm, xps):
+        self.ckint = ckint
+        self.xpm = xpm
+        self.xps = xps
+    
+    def ckint_item(self):
+        return self.ckint
+    def xps_item(self):
+        return self.xps
+    def xpm_item(self):
+        return self.xpm
+
 # checkbutton functions
-def skill_cape_cook():
-    skill_cape_cook = var_skill_cape_cook.get()
-    return(skill_cape_cook)
     
 def art_of_control_cook():
     art_of_control_cook = var_art_of_control_cook.get()
     if art_of_control_cook == 1:
-        return 2.4
+        return 0.85
     else:
-        return 3
+        return 1
 
 def chef_hat():
-    pass
+    chef_hat = var_chef_hat.get()
+    if chef_hat != 0:
+        item_chef_hat = items(0.1, 1.01, 1.01)
+        return  item_chef_hat
+    else:
+        item_chef_hat = items(0, 1, 1)
+        return item_chef_hat
 
 def cooking_apron():
-    pass
+    ancient_ring_of_skills = var_ancient_ring_of_skills.get()
+    if ancient_ring_of_skills != 0:
+        item_ancient_ring_of_skills = items(0, 1.01, 1.01)
+        return  item_ancient_ring_of_skills
+    else:
+        item_ancient_ring_of_skills = items(0, 1, 1)
+        return item_ancient_ring_of_skills
 
 def ancient_ring_of_skills():
-    pass    
+    cooking_apron = var_cooking_apron.get()
+    if cooking_apron != 0:
+        item_cooking_apron = items(0, 1, 1.01)
+        return  item_cooking_apron
+    else:
+        item_cooking_apron = items(0, 1, 1)
+        return item_cooking_apron   
 
 def chef_spoon():
-    pass
+    chef_spoon = var_chef_spoon.get()
+    if chef_spoon != 0:
+        item_chef_spoon = items(0, 1.01, 1.01)
+        return  item_chef_spoon
+    else:
+        item_chef_spoon = items(0, 1, 1)
+        return item_chef_spoon  
+    
 
 def burning_coals():
-    pass
+    burning_coals = var_burning_coals.get()
+    if burning_coals != 0:
+        item_burning_coals = items(0, 1, 1.03)
+        return  item_burning_coals
+    else:
+        item_burning_coals = items(0, 1, 1)
+        return item_burning_coals  
 
 def sweltering_pools():
-    pass
+    sweltering_pools = var_sweltering_pools.get()
+    if sweltering_pools != 0:
+        item_sweltering_pools = items(0.97, 1.03, 1)
+        return  item_sweltering_pools
+    else:
+        item_sweltering_pools = items(1, 1, 1)
+        return item_sweltering_pools  
 
 # frame skill boots
 skill_boosts_cook_text = Label(fr_skill_boosts, text='Skill Boosts')
@@ -627,7 +676,7 @@ sweltering_pools_resp.grid(column=1, row=7, sticky=tk.E, padx=5, pady=5)
 art_of_control_cook_text = Label(fr_skill_boosts, text='Art of Control')
 art_of_control_cook_text.grid(column=0, row=8, sticky=tk.W, padx=5, pady=5)
 var_art_of_control_cook = IntVar()
-art_of_control_cook_resp = Checkbutton(fr_cooking_fire,variable=var_art_of_control_cook, onvalue=1, offvalue=0, command=art_of_control_cook)
+art_of_control_cook_resp = Checkbutton(fr_skill_boosts,variable=var_art_of_control_cook, onvalue=1, offvalue=0, command=art_of_control_cook)
 art_of_control_cook_resp.pack()
 art_of_control_cook_resp.grid(column=1, row=8, sticky=tk.E, padx=5, pady=5)
 
@@ -656,10 +705,10 @@ var_mastery_lvl_cook.set(lvl_list[0])
 mastery_lvl_cook_resp = OptionMenu(fr_cooking_fire, var_mastery_lvl_cook, *lvl_list)
 mastery_lvl_cook_resp.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
 
-burn_rate_cook_text = Label(fr_cooking_fire, text='Burn Rate')
-burn_rate_cook_text.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
-burn_rate_cook_resp = Label(fr_cooking_fire, text='0')
-burn_rate_cook_resp.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
+cook_rate_cook_text = Label(fr_cooking_fire, text='Cook Rate')
+cook_rate_cook_text.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
+cook_rate_cook_resp = Label(fr_cooking_fire, text='70')
+cook_rate_cook_resp.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
 
 gloves_profit_cook_text = Label(fr_cooking_fire, text='Gloves Profit/Loss')
 gloves_profit_cook_text.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
@@ -667,71 +716,86 @@ gloves_profit_cook_resp = Label(fr_cooking_fire, text='0')
 gloves_profit_cook_resp.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
 
 
-xp_hr_cook_text = Label(fr_cooking_fire, text='XP/Hr')
-xp_hr_cook_text.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
-xp_hr_cook_resp = Label(fr_cooking_fire, text='0')
-xp_hr_cook_resp.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
-
-
-var_skill_cape_cook = IntVar()
-skill_cape_cook_resp = Checkbutton(fr_cooking_fire,variable=var_skill_cape_cook, onvalue=1, offvalue=0, command=skill_cape_cook)
-skill_cape_cook_resp.pack()
-skill_cape_cook_resp.grid(column=1, row=8, sticky=tk.E, padx=5, pady=5)
+xp_skill_hr_cook_text = Label(fr_cooking_fire, text='Skill XP/Hr')
+xp_skill_hr_cook_text.grid(column=0, row=6, sticky=tk.W, padx=5, pady=5)
+xp_skill_hr_cook_resp = Label(fr_cooking_fire, text='0')
+xp_skill_hr_cook_resp.grid(column=1, row=6, sticky=tk.E, padx=5, pady=5)
 
 # functions cooking fire
-def fish_cook_xp(typefish):
-    type_recipe = typefish
+def recipe_cook_xp(typerecipe):
+    type_recipe = typerecipe
     fire_cooking = var_your_fire.get()
 
     xp_df = pd.read_excel('cooking.xlsx')
     bonus_xp = int(xp_df.loc[xp_df['Logs'] == fire_cooking, 'Bonus Xp'])
-    xp = (int(xp_df.loc[xp_df['Recipe Cooking Fire'] == type_recipe,'Xp']))*(1+(bonus_xp*0.01))
-    return xp 
+    xp_bonus = (int(xp_df.loc[xp_df['Recipe Cooking Fire'] == type_recipe,'Xp']))*(1+(bonus_xp*0.01))
+    return xp_bonus
+    
+def cook_rate_cook():
+    cape_selected = var_cape_skills.get()
 
-def burn_rate_cook():
-    if skill_cape_cook() == 1:
-        burn_rate_cook_resp['text'] = 0
-        return 0
+    if cape_selected != "None":
+        cook_rate_cook_resp['text'] = 100
+        return 100
     else:
         level = var_mastery_lvl_cook.get()
-        burn_rate = (30 - (int(level) * 0.6))+1
-    if burn_rate < 0:
-        burn_rate_cook_resp['text'] = 1
-        return 1
+        cook_rate = (int(level) * 0.6) + 70
+    if cook_rate > 100:
+        cook_rate_cook_resp['text'] = 100
+        return 100
     else:
-        burn_rate_cook_resp['text'] = round(burn_rate)
-        return burn_rate
+        cook_rate_cook_resp['text'] = round(cook_rate)
+        return cook_rate
 
-#FIXME ao executar gloves_profit_cook a função burn_rate_cook tambem executa, corrigir.
+def cook_time():
+    type_recipe = var_fish_cook.get()
+    cape_selected = var_cape_skills.get()
+
+    cooking_df = pd.read_excel('cooking.xlsx')
+    value = int(cooking_df.loc[cooking_df['Recipe Cooking Fire'] == type_recipe, 'Cook Time'])
+
+    if cape_selected != "None":
+        cook_time = (value * 0.85 * art_of_control_cook() * sweltering_pools().ckint_item()) - chef_hat().ckint_item() 
+        return cook_time
+    else:
+        cook_time = (value * art_of_control_cook() * sweltering_pools().ckint_item()) - chef_hat().ckint_item()
+        return cook_time
+
+
+#FIXME ao executar gloves_profit_cook a função cook_rate_cook tambem executa, corrigir.
 def gloves_profit_cook():
     type_recipe = var_fish_cook.get()
-    burn_rate = burn_rate_cook()
+    cook_rate = cook_rate_cook()
 
     cooking_df = pd.read_excel('cooking.xlsx')
     value = int(cooking_df.loc[cooking_df['Recipe Cooking Fire'] == type_recipe, 'Value'])
-    gloves_profit = ((500*value)-((500*(1-(burn_rate*0.01)))*value))-50000
+    gloves_profit = ((500*value)-((500*(1-(cook_rate*0.01)))*value))-50000
     gloves_profit_cook_resp['text'] = round(gloves_profit)
 
-#FIXME ao executar xp_hr_cook a função burn_rate_cook tambem execura, corrigir.
-def xp_hr_cook():
-    xp_fish_cook = fish_cook_xp(var_fish_cook.get())
-    cook_rate = 3600/art_of_control_cook() 
-    burn_rate_xp = burn_rate_cook()
+#FIXME ao executar xp_skill_hr_cook a função cook_rate_cook tambem execura, corrigir.
+def xp_skill_hr_cook():
+    xp_fish_cook = recipe_cook_xp(var_fish_cook.get())
+    cook_rate_xp = cook_rate_cook()
+    cook_time_xp = cook_time()
+
+    xp_skill_hr = ((3600/cook_time_xp)*(cook_rate_xp*0.01))*xp_fish_cook
+    xp_teste = xp_skill_hr * chef_hat().xps_item() * cooking_apron().xps_item() * ancient_ring_of_skills().xps_item() * chef_spoon().xps_item() * burning_coals().xps_item()
+    print(xp_teste, cook_time_xp, cook_rate_xp, xp_fish_cook)
+    xp_skill_hr_cook_resp['text'] = round(xp_teste)
+
+def cook_hr():
+    pass
     
-    xp_hr = (cook_rate*(burn_rate_xp*0.01))+((cook_rate*(1-(burn_rate_xp*0.01)))*xp_fish_cook)
-    xp_hr_cook_resp['text'] = round(xp_hr)
-
 def button_cooking_fire():
+    recipe_cook_xp(var_fish_cook.get())
     gloves_profit_cook()
-    xp_hr_cook()
-
+    xp_skill_hr_cook()
 # cooking fire button    
 
 calculate_cooking = Button(fr_cooking_fire, text='Calcular',command=button_cooking_fire)
 calculate_cooking.grid(columnspan=2, row=7)
 
-# Frame Furnance
-
+# Frame Furnancel
 # frame 3
 
 current_xp_cook_text = Label(fr_furnance2, text='Current XP')
@@ -758,8 +822,8 @@ recipe_needed_cook_resp.grid(column=1, row=3)
 
 def fish_needed_cook():
     total_xp_fish = total_xp(current_xp_cook_resp.get(), var_desired_lvl_cook.get())
-    xp_needed_cook = fish_cook_xp(var_fish2_cook.get())
-    burn_rate_needed = burn_rate_cook()
+    xp_needed_cook = recipe_cook_xp(var_fish2_cook.get())
+    burn_rate_needed = cook_rate_cook()
 
     fish_needed = total_xp_fish / (xp_needed_cook * (1-(burn_rate_needed*0.01)))
     recipe_needed_cook_resp['text'] = math.ceil(fish_needed)
